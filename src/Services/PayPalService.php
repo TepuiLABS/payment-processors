@@ -71,17 +71,18 @@ class PayPalService
      * @param float $amount
      * @param string $currency
      * @return \Illuminate\Http\RedirectResponse
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     public function handlePayment(float $amount, string $currency = 'USD')
     {
-        $order = (object) $this->createOrder($amount, $currency);
-        $orderLinks = collect($order->links);
+        $order = $this->createOrder($amount, $currency);
+        $orderLinks = collect($order['links']);
 
         $approve = $orderLinks->where('rel', 'approve')->first();
 
-        session()->put('approvalId', $order->id);
+        session()->put('approvalId', $order['id']);
 
-        return redirect()->away($approve->href);
+        return redirect()->away($approve['href']);
     }
 
     /**
@@ -127,8 +128,8 @@ class PayPalService
                     'brand_name' => config('app.name'),
                     'shipping_preference' => 'NO_SHIPPING',
                     'user_action' => 'PAY_NOW',
-                    'return_url' => route('payment-processors.paypal.return_url'),
-                    'cancel_url' => route('payment-processors.paypal.cancel_url'),
+                    'return_url' => config('payment-processors.paypal.return_url'),
+                    'cancel_url' => config('payment-processors.paypal.cancel_url'),
                 ],
             ],
             [],
