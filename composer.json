@@ -1,43 +1,51 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "tepuilabs/payment-processors",
+    "description": "Payment processors",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "tepuilabs",
+        "payment-processors",
+        "mercadopago",
+        "paypal"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com/tepuilabs/payment-processors",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": "https://spatie.be",
+            "name": "angel cruz",
+            "email": "angel@tepuilabs.dev",
+            "homepage": "https://tepuilabs.dev",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.4|^8.0",
+        "guzzlehttp/guzzle": "^7.2",
         "illuminate/contracts": "^8.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.17",
         "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.3",
+        "psalm/plugin-laravel": "^1.4",
+        "vimeo/psalm": "^4.3"
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src",
-            "Spatie\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Tepuilabs\\PaymentProcessors\\": "src",
+            "Tepuilabs\\PaymentProcessors\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Tepuilabs\\PaymentProcessors\\Tests\\": "tests"
         }
     },
     "scripts": {
         "psalm": "vendor/bin/psalm",
         "test": "vendor/bin/phpunit --colors=always",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+		"format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+		"all" : "composer psalm && composer test && composer test-coverage && composer format"
     },
     "config": {
         "sort-packages": true
@@ -45,23 +53,13 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
+                "Tepuilabs\\PaymentProcessors\\PaymentProcessorsServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
+                "PaymentProcessors": "Tepuilabs\\PaymentProcessors\\Facade\\PaymentProcessors"
             }
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "funding": [
-        {
-            "type": "github",
-            "url": "https://github.com/sponsors/spatie"
-        },
-        {
-            "type": "other",
-            "url": "https://spatie.be/open-source/support-us"
-        }
-    ]
+    "prefer-stable": true
 }

@@ -1,26 +1,21 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Tepuilabs\PaymentProcessors\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\Skeleton\SkeletonServiceProvider;
+use Tepuilabs\PaymentProcessors\PaymentProcessorsServiceProvider;
 
 class TestCase extends Orchestra
 {
     public function setUp(): void
     {
         parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Spatie\\Skeleton\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            SkeletonServiceProvider::class,
+            PaymentProcessorsServiceProvider::class,
         ];
     }
 
@@ -34,7 +29,7 @@ class TestCase extends Orchestra
         ]);
 
         /*
-        include_once __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_payment_processors_table.php.stub';
         (new \CreatePackageTable())->up();
         */
     }

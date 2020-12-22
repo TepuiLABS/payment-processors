@@ -1,54 +1,98 @@
-# :package_description
+<p align="center">
+	<img src="payment-processors.png" width="1028">
+</p>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_name/:package_name.svg?style=flat-square)](https://packagist.org/packages/:vendor_name/:package_name)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/:vendor_name/:package_name/run-tests?label=tests)](https://github.com/:vendor_name/:package_name/actions?query=workflow%3ATests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_name/:package_name.svg?style=flat-square)](https://packagist.org/packages/:vendor_name/:package_name)
+# Payment processors
 
-**Note:** Run `./configure-skeleton` to get started, or manually replace  ```:author_name``` ```:author_username``` ```:author_email``` ```:vendor_name``` ```:package_name``` ```:package_description``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](.github/CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line. You can also run `configure-skeleton.sh` to do this automatically.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/tepuilabs/payment-processors.svg?style=flat-square)](https://packagist.org/packages/tepuilabs/payment-processors)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/tepuilabs/payment-processors/run-tests?label=tests)](https://github.com/tepuilabs/payment-processors/actions?query=workflow%3ATests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/tepuilabs/payment-processors.svg?style=flat-square)](https://packagist.org/packages/tepuilabs/payment-processors)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
-## Support us
+Paquete para laravel que se encarga de gestionar diferentes pasarelas de pago:
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/package-skeleton-laravel.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/package-skeleton-laravel)
+- Mercadopago de Mercadolibre
+- PayPal (por implementar)
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+Esto es idea original de @JuanDMeGon, tomada de su curso en Udemy de [Procesa pagos con Laravel y las mejores plataformas de pagos](https://www.udemy.com/course/procesa-pagos-en-linea-con-laravel-y-pasarelas-de-pagos-paypal-stripe/?referralCode=23F6FEDB611DEF416097).
+
+Muchas gracias Juan por tu trabajo y esfuerzo!!
+
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_name/:package_name
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --provider="Spatie\Skeleton\SkeletonServiceProvider" --tag="migrations"
-php artisan migrate
+composer require tepuilabs/payment-processors
 ```
 
 You can publish the config file with:
 ```bash
-php artisan vendor:publish --provider="Spatie\Skeleton\SkeletonServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Tepuilabs\PaymentProcessors\PaymentProcessorsServiceProvider" --tag="config"
 ```
 
 This is the contents of the published config file:
 
 ```php
 return [
+
+    'mercadopago' => [
+        'base_uri'      => env('MERCADOPAGO_BASE_URI'),
+        'key'           => env('MERCADOPAGO_KEY'),
+        'secret'        => env('MERCADOPAGO_SECRET'),
+        'base_currency' => env('MERCADOPAGO_BASE_CURRENCY'),
+        'class'         => Tepuilabs\PaymentProcessors\Services\MercadoPagoService::class,
+    ],
 ];
 ```
 
-## Usage
+### como usar
+
+Primero debes seguir las indicaciones de mercado libre para hacer la integración de [cliente](https://www.mercadopago.com.uy/developers/es/guides/online-payments/checkout-api/receiving-payment-by-card/) luego de eso, sigue los pasos abajo descritos:
+
+> NOTA: esta implementación no está pensada para cobros en cuotas
+
 
 ```php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+// usa el facade
+use Tepuilabs\PaymentProcessors\Facades\PaymentProcessors;
+
+// luego crea la instancia de la clase a usar, en este caso la de mercado libre
+// en el futuro se van a realizar otras integraciones (paypal)
+$mercadopago = PaymentProcessors::resolveService('mercadopago');
+
+// necesitamos:
+// $cardNetwork: visa / mastercard
+// $cardToken: token de la tarjeta
+// $amount: monto a cobrar
+// $userEmail: correo del usuario
+
+$mercadopago->handlePayment('visa', 'ff8080814c11e237014c1ff593b57b4d', 177, 'test@test.com');
 ```
+
+### respuesta
+
+```yml
+{
+    "status": "approved",
+    "status_detail": "accredited",
+    "id": 3055677,
+    "date_approved": "2019-02-23T00:01:10.000-04:00",
+    "payer": {
+        ...
+    },
+    "payment_method_id": "visa",
+    "payment_type_id": "credit_card",
+    "refunds": [],
+    ...
+}
+```
+
+
+
+
 
 ## Testing
 
@@ -70,7 +114,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [angel cruz](https://github.com/abr4xas)
 - [All Contributors](../../contributors)
 
 ## License
