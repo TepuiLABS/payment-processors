@@ -1,7 +1,7 @@
 name: Psalm
 
 on:
-  push:
+  pull_request:
     paths:
       - '**.php'
       - 'psalm.xml.dist'

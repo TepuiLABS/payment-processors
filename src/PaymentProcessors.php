@@ -5,10 +5,12 @@ namespace Tepuilabs\PaymentProcessors;
 class PaymentProcessors
 {
     /**
-     * resolveService
+     * Undocumented function
+     *
+     * @param string $name
      * @todo hacer que funcione con psalm #YOLO
      */
-    public function resolveService($name)
+    public function resolveService(string $name)
     {
         $service = config("payment-processors.{$name}.class");
 
