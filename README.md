@@ -5,7 +5,7 @@
 # Payment processors
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tepuilabs/payment-processors.svg?style=flat-square)](https://packagist.org/packages/tepuilabs/payment-processors)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/tepuilabs/payment-processors/run-tests?label=tests)](https://github.com/tepuilabs/payment-processors/actions?query=workflow%3ATests+branch%3Amaster)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/tepuilabs/payment-processors/Tests?style=flat-square)](https://github.com/tepuilabs/payment-processors/actions?query=workflow%3ATests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/tepuilabs/payment-processors.svg?style=flat-square)](https://packagist.org/packages/tepuilabs/payment-processors)
 
 
