@@ -12,7 +12,7 @@
 Paquete para laravel que se encarga de gestionar diferentes pasarelas de pago:
 
 - Mercadopago de Mercadolibre
-- PayPal (por implementar)
+- PayPal
 
 
 Esto es idea original de @JuanDMeGon, tomada de su curso en Udemy de [Procesa pagos con Laravel y las mejores plataformas de pagos](https://www.udemy.com/course/procesa-pagos-en-linea-con-laravel-y-pasarelas-de-pagos-paypal-stripe/?referralCode=23F6FEDB611DEF416097).
@@ -20,20 +20,21 @@ Esto es idea original de @JuanDMeGon, tomada de su curso en Udemy de [Procesa pa
 Muchas gracias Juan por tu trabajo y esfuerzo!!
 
 
-## Installation
+## instalación
 
-You can install the package via composer:
+usando composer
 
 ```bash
 composer require tepuilabs/payment-processors
 ```
 
-You can publish the config file with:
+de forma opcional puedes publicar el archivo de configuración:
+
 ```bash
 php artisan vendor:publish --provider="Tepuilabs\PaymentProcessors\PaymentProcessorsServiceProvider" --tag="config"
 ```
 
-This is the contents of the published config file:
+el contenido del archivo de configuración es el siguiente:
 
 ```php
 return [
@@ -45,22 +46,34 @@ return [
         'base_currency' => env('MERCADOPAGO_BASE_CURRENCY'),
         'class'         => Tepuilabs\PaymentProcessors\Services\MercadoPagoService::class,
     ],
+
+    'paypal' => [
+        'base_uri'      => env('PAYPAL_BASE_URI'),
+        'client_id'     => env('PAYPAL_CLIENT_ID'),
+        'client_secret' => env('PAYPAL_CLIENT_SECRET'),
+        'return_url'    => env('PAYPAL_RETURN_URL'),
+        'cancel_url'    => env('PAYPAL_CANCEL_URL'),
+        'class'         => \Tepuilabs\PaymentProcessors\Services\PayPalService::class,
+    ],
 ];
 ```
 
 ### como usar
 
+
+<details>
+
+<summary>Mercado pago</summary>
+
 Primero debes seguir las indicaciones de mercado libre para hacer la integración de [cliente](https://www.mercadopago.com.uy/developers/es/guides/online-payments/checkout-api/receiving-payment-by-card/) luego de eso, sigue los pasos abajo descritos:
 
 > NOTA: esta implementación no está pensada para cobros en cuotas
-
 
 ```php
 // usa el facade
 use Tepuilabs\PaymentProcessors\Facades\PaymentProcessors;
 
-// luego crea la instancia de la clase a usar, en este caso la de mercado libre
-// en el futuro se van a realizar otras integraciones (paypal)
+// luego crea la instancia de la clase a usar
 $mercadopago = PaymentProcessors::resolveService('mercadopago');
 
 // necesitamos:
@@ -89,10 +102,37 @@ $mercadopago->handlePayment('visa', 'ff8080814c11e237014c1ff593b57b4d', 177, 'te
     ...
 }
 ```
+</details>
 
+<details>
+<summary>PayPal</summary>
+Para usar paypal solamente debemos usar dos metodos:
 
+```php
+// usa el facade
+use Tepuilabs\PaymentProcessors\Facades\PaymentProcessors;
 
+// luego crea la instancia de la clase a usar
+$paypal = PaymentProcessors::resolveService('paypal');
 
+// necesitamos:
+// $amoun: el monto a cobrar
+// $currency: el id de la moneda a cobrar, por defecto es USD
+
+// este método hace una redirección a paypal
+
+$paypal->handlePayment(200);
+
+// el otro método que debemos usar es
+
+$paypal->handleApproval();
+
+// este método retorna toda la infromación del pago de ser aceptado por el usuario
+// o retorna un array vacio
+
+```
+
+</details>
 
 ## Testing
 
