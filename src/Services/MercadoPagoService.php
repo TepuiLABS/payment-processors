@@ -13,12 +13,19 @@ class MercadoPagoService
     protected string $secret;
     protected string $baseCurrency;
 
-    public function __construct()
+    private array $apiKeys;
+
+    final public function __construct(array $apiKeys)
     {
-        $this->baseUri = config('payment-processors.mercadopago.base_uri');
-        $this->key = config('payment-processors.mercadopago.key');
-        $this->secret = config('payment-processors.mercadopago.secret');
-        $this->baseCurrency = config('payment-processors.mercadopago.base_currency');
+        $this->baseUri = $apiKeys['base_uri'];
+        $this->key = $apiKeys['key'];
+        $this->secret = $apiKeys['secret'];
+        $this->baseCurrency = $apiKeys['base_currency'];
+    }
+
+    public static function paymentService(array $apiKeys): self
+    {
+        return new static($apiKeys);
     }
 
     public function resolveAuthorization(array &$queryParams, array &$formParams, array &$headers): void

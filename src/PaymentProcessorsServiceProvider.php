@@ -12,13 +12,7 @@ class PaymentProcessorsServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/payment-processors.php' => config_path('payment-processors.php'),
             ], 'config');
-
-            $this->publishes([
-                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/payment-processors'),
-            ], 'views');
         }
-
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'payment-processors');
     }
 
     public function register()
