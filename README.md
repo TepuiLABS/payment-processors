@@ -119,6 +119,8 @@ $params = [
     'base_uri' => 'https://api.sandbox.paypal.com',
     'client_id' => '',
     'client_secret' => '',
+    'return_url' => '',
+    'cancel_url' => ''
 ];
 
 $paypal = PaymentProcessors::resolveService('paypal', $params);

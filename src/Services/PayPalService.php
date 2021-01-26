@@ -12,6 +12,8 @@ class PayPalService
     protected string $baseUri;
     protected string $clientId;
     protected string $clientSecret;
+    protected string $return_url;
+    protected string $cancel_url;
 
     private array $apiKeys;
 
@@ -20,6 +22,8 @@ class PayPalService
         $this->baseUri = $apiKeys['base_uri'];
         $this->clientId = $apiKeys['client_id'];
         $this->clientSecret = $apiKeys['client_secret'];
+        $this->return_url = $apiKeys['return_url'];
+        $this->cancel_url = $apiKeys['cancel_url'];
     }
 
     public static function paymentService(array $apiKeys): self
@@ -135,8 +139,8 @@ class PayPalService
                     'brand_name' => config('app.name'),
                     'shipping_preference' => 'NO_SHIPPING',
                     'user_action' => 'PAY_NOW',
-                    'return_url' => config('payment-processors.paypal.return_url'),
-                    'cancel_url' => config('payment-processors.paypal.cancel_url'),
+                    'return_url' => $this->return_url,
+                    'cancel_url' => $this->cancel_url,
                 ],
             ],
             [],
