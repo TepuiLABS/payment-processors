@@ -13,11 +13,18 @@ class PayPalService
     protected string $clientId;
     protected string $clientSecret;
 
-    public function __construct()
+    private array $apiKeys;
+
+    final public function __construct(array $apiKeys)
     {
-        $this->baseUri = config('payment-processors.paypal.base_uri');
-        $this->clientId = config('payment-processors.paypal.client_id');
-        $this->clientSecret = config('payment-processors.paypal.client_secret');
+        $this->baseUri = $apiKeys['base_uri'];
+        $this->clientId = $apiKeys['client_id'];
+        $this->clientSecret = $apiKeys['client_secret'];
+    }
+
+    public static function paymentService(array $apiKeys): self
+    {
+        return new static($apiKeys);
     }
 
     public function resolveAuthorization(array &$queryParams, array &$formParams, array &$headers): void
