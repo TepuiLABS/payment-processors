@@ -6,14 +6,6 @@ use Tepuilabs\PaymentProcessors\Tests\TestCase;
 
 class PayPalTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        config()->set('payment-processors.paypal.return_url', 'http://localhost/return_url');
-        config()->set('payment-processors.paypal.cancel_url', 'http://localhost/cancel_url');
-    }
-
     /** @test */
     public function test_it_can_resolve_class()
     {
@@ -21,6 +13,8 @@ class PayPalTest extends TestCase
             'base_uri' => 'https://api.sandbox.paypal.com',
             'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
             'client_secret' => 'EPhL66hqSoMjfWT3FQpuZPxQFnFCh-Llpf9qBb3UkXX33bjyLBE4Qu1d2dx8s3y-qeI-ycmA5kVbdmJ6',
+            'return_url' => 'http://localhost/return_url',
+            'cancel_url' => 'http://localhost/cancel_url',
         ];
 
         $paypal = PaymentProcessors::resolveService('paypal', $params);
@@ -35,6 +29,8 @@ class PayPalTest extends TestCase
             'base_uri' => 'https://api.sandbox.paypal.com',
             'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
             'client_secret' => 'EPhL66hqSoMjfWT3FQpuZPxQFnFCh-Llpf9qBb3UkXX33bjyLBE4Qu1d2dx8s3y-qeI-ycmA5kVbdmJ6',
+            'return_url' => 'http://localhost/return_url',
+            'cancel_url' => 'http://localhost/cancel_url',
         ];
 
         $paypal = PaymentProcessors::resolveService('paypal', $params);
@@ -51,6 +47,8 @@ class PayPalTest extends TestCase
             'base_uri' => 'https://api.sandbox.paypal.com',
             'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
             'client_secret' => 'EPhL66hqSoMjfWT3FQpuZPxQFnFCh-Llpf9qBb3UkXX33bjyLBE4Qu1d2dx8s3y-qeI-ycmA5kVbdmJ6',
+            'return_url' => 'http://localhost/return_url',
+            'cancel_url' => 'http://localhost/cancel_url',
         ];
 
         $paypal = PaymentProcessors::resolveService('paypal', $params);
@@ -69,6 +67,8 @@ class PayPalTest extends TestCase
             'base_uri' => 'https://api.sandbox.paypal.com',
             'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
             'client_secret' => 'EPhL66hqSoMjfWT3FQpuZPxQFnFCh-Llpf9qBb3UkXX33bjyLBE4Qu1d2dx8s3y-qeI-ycmA5kVbdmJ6',
+            'return_url' => 'http://localhost/return_url',
+            'cancel_url' => 'http://localhost/cancel_url',
         ];
 
         $paypal = PaymentProcessors::resolveService('paypal', $params);
