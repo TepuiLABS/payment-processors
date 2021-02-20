@@ -49,6 +49,10 @@ return [
         'class' => \Tepuilabs\PaymentProcessors\Services\PayPalService::class,
     ],
 
+    'stripe' => [
+        'class' => \Tepuilabs\PaymentProcessors\Services\StripeService::class,
+    ],
+
 ];
 ```
 
