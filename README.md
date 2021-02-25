@@ -49,6 +49,10 @@ return [
         'class' => \Tepuilabs\PaymentProcessors\Services\PayPalService::class,
     ],
 
+    'stripe' => [
+        'class' => \Tepuilabs\PaymentProcessors\Services\StripeService::class,
+    ],
+
 ];
 ```
 
@@ -139,6 +143,43 @@ $paypal->handleApproval();
 
 // este método retorna toda la infromación del pago de ser aceptado por el usuario
 // o retorna un array vacio
+
+```
+
+</details>
+
+<details>
+<summary>Stripe</summary>
+Para usar Stripe solamente debemos usar dos metodos:
+
+```php
+// usa el facade
+use Tepuilabs\PaymentProcessors\Facades\PaymentProcessors;
+
+// luego crea la instancia de la clase a usar
+
+$params = [
+    'key' => 'pk_test_51IMzM0...',
+    'secret' => 'sk_test_51IM...',
+];
+
+$stripe = PaymentProcessors::resolveService('stripe', $params);
+
+// Para generar el payment method id te recomiendo leer esto: https://github.com/TepuiLABS/payment-processors/discussions/6
+// Para saber que es el payment method te invito a leer la documentación: https://stripe.com/docs/api/payment_methods
+
+// Despues de obtener el payment method id pasamos a generar el pago de la siguiente forma:
+
+$paymentData = [
+    'amount' => 501.52,
+    'paymentMethod' => $paymentMethodId, // pm_1IOYCAJcoyM5FfOy0cVbjyuH
+];
+
+$intent = $stripe->handlePayment($paymentData);
+
+// Y ya por ultimo, confirmamos el pago:
+
+$confirm = $stripe->confirmPayment($intent['id']);
 
 ```
 
