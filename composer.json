@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/contracts": "^8.0"
     },
@@ -43,9 +43,7 @@
     "scripts": {
         "psalm": "vendor/bin/psalm",
         "test": "vendor/bin/phpunit --colors=always",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-		"format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
-		"all" : "composer psalm && composer test && composer test-coverage && composer format"
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },
     "config": {
         "sort-packages": true

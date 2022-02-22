@@ -9,13 +9,7 @@ class PayPalTest extends TestCase
     /** @test */
     public function test_it_can_resolve_class()
     {
-        $params = [
-            'base_uri' => 'https://api.sandbox.paypal.com',
-            'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
-            'client_secret' => 'EPhL66hqSoMjfWT3FQpuZPxQFnFCh-Llpf9qBb3UkXX33bjyLBE4Qu1d2dx8s3y-qeI-ycmA5kVbdmJ6',
-            'return_url' => 'http://localhost/return_url',
-            'cancel_url' => 'http://localhost/cancel_url',
-        ];
+        $params = $this->params();
 
         $paypal = PaymentProcessors::resolveService('paypal', $params);
 
@@ -25,13 +19,7 @@ class PayPalTest extends TestCase
     /** @test */
     public function test_it_can_resolve_access_token()
     {
-        $params = [
-            'base_uri' => 'https://api.sandbox.paypal.com',
-            'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
-            'client_secret' => 'EPhL66hqSoMjfWT3FQpuZPxQFnFCh-Llpf9qBb3UkXX33bjyLBE4Qu1d2dx8s3y-qeI-ycmA5kVbdmJ6',
-            'return_url' => 'http://localhost/return_url',
-            'cancel_url' => 'http://localhost/cancel_url',
-        ];
+        $params = $this->params();
 
         $paypal = PaymentProcessors::resolveService('paypal', $params);
 
@@ -43,13 +31,7 @@ class PayPalTest extends TestCase
     /** @test */
     public function test_is_can_handle_a_payment()
     {
-        $params = [
-            'base_uri' => 'https://api.sandbox.paypal.com',
-            'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
-            'client_secret' => 'EPhL66hqSoMjfWT3FQpuZPxQFnFCh-Llpf9qBb3UkXX33bjyLBE4Qu1d2dx8s3y-qeI-ycmA5kVbdmJ6',
-            'return_url' => 'http://localhost/return_url',
-            'cancel_url' => 'http://localhost/cancel_url',
-        ];
+        $params = $this->params();
 
         $paypal = PaymentProcessors::resolveService('paypal', $params);
 
@@ -63,18 +45,28 @@ class PayPalTest extends TestCase
      */
     public function test_it_can_return_array()
     {
-        $params = [
-            'base_uri' => 'https://api.sandbox.paypal.com',
-            'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
-            'client_secret' => 'EPhL66hqSoMjfWT3FQpuZPxQFnFCh-Llpf9qBb3UkXX33bjyLBE4Qu1d2dx8s3y-qeI-ycmA5kVbdmJ6',
-            'return_url' => 'http://localhost/return_url',
-            'cancel_url' => 'http://localhost/cancel_url',
-        ];
+        $params = $this->params();
 
         $paypal = PaymentProcessors::resolveService('paypal', $params);
 
         $arr = $paypal->handleApproval();
 
         $this->assertIsArray($arr, 'assert variable is array or not');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    private  function params(): array
+    {
+        return [
+            'base_uri' => 'https://api.sandbox.paypal.com',
+            'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
+            'client_secret' => 'EPhL66hqSoMjfWT3FQpuZPxQFnFCh-Llpf9qBb3UkXX33bjyLBE4Qu1d2dx8s3y-qeI-ycmA5kVbdmJ6',
+            'return_url' => 'http://localhost/return_url',
+            'cancel_url' => 'http://localhost/cancel_url',
+        ];
     }
 }

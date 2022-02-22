@@ -27,10 +27,5 @@ class TestCase extends Orchestra
             'database' => ':memory:',
             'prefix' => '',
         ]);
-
-        /*
-        include_once __DIR__.'/../database/migrations/create_payment_processors_table.php.stub';
-        (new \CreatePackageTable())->up();
-        */
     }
 }

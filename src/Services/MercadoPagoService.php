@@ -12,6 +12,7 @@ class MercadoPagoService
     protected string $key;
     protected string $secret;
     protected string $baseCurrency;
+    protected string $integratorId;
 
     private array $apiKeys;
 
@@ -21,6 +22,7 @@ class MercadoPagoService
         $this->key = $apiKeys['key'];
         $this->secret = $apiKeys['secret'];
         $this->baseCurrency = $apiKeys['base_currency'];
+        $this->integratorId = $apiKeys['integrator_id'] ?? '';
     }
 
     public static function paymentService(array $apiKeys): self
@@ -33,6 +35,10 @@ class MercadoPagoService
         $queryParams['access_token'] = $this->resolveAccessToken();
         $headers['Content-Type'] = 'application/json';
         $headers['Accept'] = 'application/json';
+
+        if (!empty($this->integratorId)) {
+            $headers['integrator_id'] = $this->integratorId;
+        }
     }
 
     public function decodeResponse(string $response): array
@@ -84,7 +90,7 @@ class MercadoPagoService
      * @param int $installments
      * @return \Psr\Http\Message\StreamInterface|array
      */
-    public function createPayment(int $amount, string $cardNetwork, string $cardToken, string $email, int $installments = 1)
+    private function createPayment(int $amount, string $cardNetwork, string $cardToken, string $email, int $installments = 1)
     {
         return $this->makeRequest(
             'POST',

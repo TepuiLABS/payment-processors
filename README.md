@@ -77,6 +77,7 @@ $params = [
     'key' => '',
     'secret' => '',
     'base_currency' => '',
+    'integrator_id' => '', // optional
 ];
 
 $mercadopago = PaymentProcessors::resolveService('mercadopago', $params);

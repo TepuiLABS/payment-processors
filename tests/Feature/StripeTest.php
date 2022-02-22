@@ -10,10 +10,7 @@ class StripeTest extends TestCase
     /** @test */
     public function test_it_can_resolve_class()
     {
-        $params = [
-            'key' => 'pk_test_51IMzM0JcoyM5FfOypXlbYcOcg9EsrAwfhLikFrK436CqIGIRxysFz1G45NtJJik4NCVAje8xUddeeD0KjVeNe5Rf00JyWoyvEi',
-            'secret' => 'sk_test_51IMzM0JcoyM5FfOyoV47UeCAMpHFvkrPOrVRM0B83tE6NEffMlLJCuX09jh6Gv6nXKwx5pR3nWaBp5z4TPP08zIY00z3CLwJJw',
-        ];
+        $params = $this->params();
 
         $stripe = PaymentProcessors::resolveService('stripe', $params);
 
@@ -23,10 +20,7 @@ class StripeTest extends TestCase
     /** @test */
     public function test_it_can_get_balance()
     {
-        $params = [
-            'key' => 'pk_test_51IMzM0JcoyM5FfOypXlbYcOcg9EsrAwfhLikFrK436CqIGIRxysFz1G45NtJJik4NCVAje8xUddeeD0KjVeNe5Rf00JyWoyvEi',
-            'secret' => 'sk_test_51IMzM0JcoyM5FfOyoV47UeCAMpHFvkrPOrVRM0B83tE6NEffMlLJCuX09jh6Gv6nXKwx5pR3nWaBp5z4TPP08zIY00z3CLwJJw',
-        ];
+        $params = $this->params();
 
         $stripe = PaymentProcessors::resolveService('stripe', $params);
 
@@ -38,10 +32,7 @@ class StripeTest extends TestCase
     /** @test */
     public function test_it_can_generate_a_payment_method_id()
     {
-        $params = [
-            'key' => 'pk_test_51IMzM0JcoyM5FfOypXlbYcOcg9EsrAwfhLikFrK436CqIGIRxysFz1G45NtJJik4NCVAje8xUddeeD0KjVeNe5Rf00JyWoyvEi',
-            'secret' => 'sk_test_51IMzM0JcoyM5FfOyoV47UeCAMpHFvkrPOrVRM0B83tE6NEffMlLJCuX09jh6Gv6nXKwx5pR3nWaBp5z4TPP08zIY00z3CLwJJw',
-        ];
+        $params = $this->params();
 
         $stripe = PaymentProcessors::resolveService('stripe', $params);
 
@@ -66,10 +57,7 @@ class StripeTest extends TestCase
     /** @depends test_it_can_generate_a_payment_method_id */
     public function test_it_can_handle_a_payment($paymentMethodId)
     {
-        $params = [
-            'key' => 'pk_test_51IMzM0JcoyM5FfOypXlbYcOcg9EsrAwfhLikFrK436CqIGIRxysFz1G45NtJJik4NCVAje8xUddeeD0KjVeNe5Rf00JyWoyvEi',
-            'secret' => 'sk_test_51IMzM0JcoyM5FfOyoV47UeCAMpHFvkrPOrVRM0B83tE6NEffMlLJCuX09jh6Gv6nXKwx5pR3nWaBp5z4TPP08zIY00z3CLwJJw',
-        ];
+        $params = $this->params();
 
         $stripe = PaymentProcessors::resolveService('stripe', $params);
 
@@ -88,15 +76,25 @@ class StripeTest extends TestCase
     /** @depends test_it_can_handle_a_payment */
     public function test_it_can_confirm_a_payment($intent)
     {
-        $params = [
-            'key' => 'pk_test_51IMzM0JcoyM5FfOypXlbYcOcg9EsrAwfhLikFrK436CqIGIRxysFz1G45NtJJik4NCVAje8xUddeeD0KjVeNe5Rf00JyWoyvEi',
-            'secret' => 'sk_test_51IMzM0JcoyM5FfOyoV47UeCAMpHFvkrPOrVRM0B83tE6NEffMlLJCuX09jh6Gv6nXKwx5pR3nWaBp5z4TPP08zIY00z3CLwJJw',
-        ];
+        $params = $this->params();
 
         $stripe = PaymentProcessors::resolveService('stripe', $params);
 
         $confirm = $stripe->confirmPayment($intent['id']);
 
         $this->assertEquals('succeeded', $confirm['status'], 'actual value is not equals to expected');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    private function params(): array
+    {
+        return [
+            'key' => 'pk_test_51IMzM0JcoyM5FfOypXlbYcOcg9EsrAwfhLikFrK436CqIGIRxysFz1G45NtJJik4NCVAje8xUddeeD0KjVeNe5Rf00JyWoyvEi',
+            'secret' => 'sk_test_51IMzM0JcoyM5FfOyoV47UeCAMpHFvkrPOrVRM0B83tE6NEffMlLJCuX09jh6Gv6nXKwx5pR3nWaBp5z4TPP08zIY00z3CLwJJw',
+        ];
     }
 }
