@@ -52,6 +52,16 @@ class MercadoPagoService
     }
 
     /**
+     * Undocumented function
+     *
+     * @return \Psr\Http\Message\StreamInterface|array
+     */
+    public function getPaymentMethods()
+    {
+        return $this->makeRequest('GET', '/v1/payment_methods');
+    }
+
+    /**
      * handlePayment
      *
      * @param string $cardNetwork
