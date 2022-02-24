@@ -58,7 +58,19 @@ class MercadoPagoService
      */
     public function getPaymentMethods()
     {
-        return $response = $this->makeRequest('GET', '/v1/payment_methods');
+        return $this->makeRequest('GET', '/v1/payment_methods');
+    }
+
+    public function createPreference(array $params)
+    {
+        return $this->makeRequest(
+            'POST',
+            '/checkout/preferences',
+            [],
+            $params,
+            [],
+            true
+        );
     }
 
     /**

@@ -65,7 +65,6 @@ return [
 
 Primero debes seguir las indicaciones de mercado libre para hacer la integración de [cliente](https://www.mercadopago.com.uy/developers/es/guides/online-payments/checkout-api/receiving-payment-by-card/) luego de eso, sigue los pasos abajo descritos:
 
-> NOTA: esta implementación no está pensada para cobros en cuotas
 
 ```php
 // usa el facade
@@ -87,6 +86,7 @@ $mercadopago = PaymentProcessors::resolveService('mercadopago', $params);
 // $cardToken: token de la tarjeta
 // $amount: monto a cobrar
 // $userEmail: correo del usuario
+// $installments: default 1
 
 $mercadopago->handlePayment('visa', 'ff8080814c11e237014c1ff593b57b4d', 177, 'test@test.com');
 ```
@@ -108,6 +108,65 @@ $mercadopago->handlePayment('visa', 'ff8080814c11e237014c1ff593b57b4d', 177, 'te
     ...
 }
 ```
+
+
+#### crear preferencia de pago para Checkout Pro
+
+```php
+<?php
+
+$preference = [
+    'items' => [
+        [
+            "title" => "Dummy Title",
+            "description" => "Dummy description",
+            "picture_url" => "http://project.dev/product-image.jpg",
+            "category_id" => "cat123",
+            "quantity" => 1,
+            "currency_id" => "UYU",
+            "unit_price" => 10
+        ]
+    ],
+    'payer' => [
+        'name' => 'John',
+        'surname' => 'Doe',
+        'email' => 'john.doe@domain.tld',
+        'identification' => [
+            'type' => '',
+            'number' => ''
+        ],
+        'date_created' => ''
+    ],
+    'payment_methods' => [
+        'excluded_payment_methods' => [
+            [
+                'id' => 'amex'
+            ]
+        ],
+        'excluded_payment_types' => [
+            [
+                'id' => 'atm'
+            ]
+        ],
+        'installments' => 6,
+    ],
+    'statement_descriptor' => 'MERCADOPAGO',
+    'auto_return' => 'approved',
+    'back_urls' => [
+        'success' => 'http://project.dev/success_route',
+        'failure' => 'http://project.dev/error_route',
+        'pending' => 'http://project.dev/waiting_route'
+    ]
+];
+
+$preference = $mercadopago->createPreference($preference);
+
+// luego se puede usar `sandbox_init_point` para crear el enlace para que el cliente se dirija a Mercadopago a pagar
+
+$preference->sandbox_init_point;
+
+```
+
 </details>
 
 <details>
