@@ -7,7 +7,7 @@ use Tepuilabs\PaymentProcessors\PaymentProcessorsServiceProvider;
 
 class TestCase extends Orchestra
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
