@@ -14,8 +14,6 @@ class MercadoPagoService
     protected string $baseCurrency;
     protected string $integratorId;
 
-    private array $apiKeys;
-
     final public function __construct(array $apiKeys)
     {
         $this->baseUri = $apiKeys['base_uri'];

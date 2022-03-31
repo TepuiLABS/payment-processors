@@ -12,8 +12,6 @@ class StripeService
     protected string $key;
     protected string $secret;
 
-    private array $apiKeys;
-
     final public function __construct(array $apiKeys)
     {
         $this->baseUri = 'https://api.stripe.com';

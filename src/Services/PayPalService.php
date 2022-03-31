@@ -15,8 +15,6 @@ class PayPalService
     protected string $return_url;
     protected string $cancel_url;
 
-    private array $apiKeys;
-
     final public function __construct(array $apiKeys)
     {
         $this->baseUri = $apiKeys['base_uri'];
