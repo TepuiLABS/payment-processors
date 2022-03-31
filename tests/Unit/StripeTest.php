@@ -2,9 +2,7 @@
 
 use Tepuilabs\PaymentProcessors\Facades\PaymentProcessors;
 
-
 beforeEach(function () {
-
     $this->params = [
         'key' => 'pk_test_51IMzM0JcoyM5FfOypXlbYcOcg9EsrAwfhLikFrK436CqIGIRxysFz1G45NtJJik4NCVAje8xUddeeD0KjVeNe5Rf00JyWoyvEi',
         'secret' => 'sk_test_51IMzM0JcoyM5FfOyoV47UeCAMpHFvkrPOrVRM0B83tE6NEffMlLJCuX09jh6Gv6nXKwx5pR3nWaBp5z4TPP08zIY00z3CLwJJw',
@@ -13,7 +11,6 @@ beforeEach(function () {
 
 
 test('it can resolve stripe service', function () {
-
     $stripe = PaymentProcessors::resolveService('stripe', $this->params);
 
     $this->assertInstanceOf(\Tepuilabs\PaymentProcessors\Services\StripeService::class, $stripe);
@@ -21,7 +18,6 @@ test('it can resolve stripe service', function () {
 
 
 test('it can get stripe balance', function () {
-
     $stripe = PaymentProcessors::resolveService('stripe', $this->params);
 
     $balance = $stripe->makeRequest('GET', '/v1/balance');
@@ -30,7 +26,6 @@ test('it can get stripe balance', function () {
 });
 
 test('it can generate a stripe payment method id', function () {
-
     $stripe = PaymentProcessors::resolveService('stripe', $this->params);
 
     // only for test
@@ -52,7 +47,6 @@ test('it can generate a stripe payment method id', function () {
 });
 
 test('it can handle a stripe payment', function ($paymentMethodId) {
-
     $stripe = PaymentProcessors::resolveService('stripe', $this->params);
 
     $paymentData = [
@@ -67,8 +61,7 @@ test('it can handle a stripe payment', function ($paymentMethodId) {
     return $intent;
 })->depends('it can generate a stripe payment method id');
 
-test('it can confirm stripe payment', function($intent) {
-
+test('it can confirm stripe payment', function ($intent) {
     $stripe = PaymentProcessors::resolveService('stripe', $this->params);
 
     $confirm = $stripe->confirmPayment($intent['id']);

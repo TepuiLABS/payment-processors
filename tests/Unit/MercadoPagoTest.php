@@ -14,7 +14,6 @@ test('can resolve class', function () {
 });
 
 test('can resolve access token', function () {
-
     $params = [
         'base_uri' => 'https://api.mercadopago.com',
         'key' => 'TEST-529cf55e-ccfa-4422-82f2-42f48528ae99',
@@ -31,7 +30,6 @@ test('can resolve access token', function () {
 
 
 test('can return array of payment methods', function () {
-
     $params = [
         'base_uri' => 'https://api.mercadopago.com',
         'key' => 'TEST-529cf55e-ccfa-4422-82f2-42f48528ae99',
@@ -48,7 +46,6 @@ test('can return array of payment methods', function () {
 
 
 test('can create a preference', function () {
-
     $params = [
         'base_uri' => 'https://api.mercadopago.com',
         'key' => 'TEST-529cf55e-ccfa-4422-82f2-42f48528ae99',
@@ -67,8 +64,8 @@ test('can create a preference', function () {
                 "category_id" => "cat123",
                 "quantity" => 1,
                 "currency_id" => "UYU",
-                "unit_price" => 10
-            ]
+                "unit_price" => 10,
+            ],
         ],
         'payer' => [
             'name' => 'John',
@@ -76,20 +73,20 @@ test('can create a preference', function () {
             'email' => 'john.doe@domain.tld',
             'identification' => [
                 'type' => '',
-                'number' => ''
+                'number' => '',
             ],
-            'date_created' => ''
+            'date_created' => '',
         ],
         'payment_methods' => [
             'excluded_payment_methods' => [
                 [
-                    'id' => 'amex'
-                ]
+                    'id' => 'amex',
+                ],
             ],
             'excluded_payment_types' => [
                 [
-                    'id' => 'atm'
-                ]
+                    'id' => 'atm',
+                ],
             ],
             'installments' => 6,
         ],
@@ -98,8 +95,8 @@ test('can create a preference', function () {
         'back_urls' => [
             'success' => 'http://project.dev/success_route',
             'failure' => 'http://project.dev/error_route',
-            'pending' => 'http://project.dev/waiting_route'
-        ]
+            'pending' => 'http://project.dev/waiting_route',
+        ],
     ];
 
     $preference = $mercadopago->createPreference($preference);

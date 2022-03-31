@@ -34,7 +34,7 @@ class MercadoPagoService
         $headers['Content-Type'] = 'application/json';
         $headers['Accept'] = 'application/json';
 
-        if (!empty($this->integratorId)) {
+        if (! empty($this->integratorId)) {
             $headers['integrator_id'] = $this->integratorId;
         }
     }

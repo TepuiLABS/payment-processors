@@ -2,9 +2,7 @@
 
 use Tepuilabs\PaymentProcessors\Facades\PaymentProcessors;
 
-
 beforeEach(function () {
-
     $this->params = [
         'base_uri' => 'https://api.sandbox.paypal.com',
         'client_id' => 'ARt435S0DIjl2rljuro1TIOQkeKvNSykbp34DBZIQBUxwqccrMZavTE0r-v7QDFtNQcMU-5SIwBf7B-n',
@@ -16,7 +14,6 @@ beforeEach(function () {
 
 
 test('it can resolve paypal service', function () {
-
     $mercadopago = PaymentProcessors::resolveService('paypal', $this->params);
 
     $this->assertInstanceOf(\Tepuilabs\PaymentProcessors\Services\PayPalService::class, $mercadopago);
@@ -33,8 +30,6 @@ test('it can resolve paypal access token', function () {
 
 
 test('it can handle redirect to paypal', function () {
-
-
     $paypal = PaymentProcessors::resolveService('paypal', $this->params);
 
     $payment = $paypal->handlePayment(200);
