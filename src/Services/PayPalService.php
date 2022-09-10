@@ -3,6 +3,9 @@
 namespace Tepuilabs\PaymentProcessors\Services;
 
 use GuzzleHttp\Client as PayPalClient;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\RedirectResponse;
+use Psr\Http\Message\StreamInterface;
 use Tepuilabs\PaymentProcessors\Traits\ConsumeExternalServices;
 
 class PayPalService
@@ -10,9 +13,13 @@ class PayPalService
     use ConsumeExternalServices;
 
     protected string $baseUri;
+
     protected string $clientId;
+
     protected string $clientSecret;
+
     protected string $return_url;
+
     protected string $cancel_url;
 
     final public function __construct(array $apiKeys)
@@ -44,6 +51,8 @@ class PayPalService
      * resolveAccessToken
      *
      * @return string
+     *
+     * @throws GuzzleException
      */
     public function resolveAccessToken(): string
     {
@@ -77,12 +86,14 @@ class PayPalService
     /**
      * Undocumented function
      *
-     * @param float $amount
-     * @param string $currency
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  float  $amount
+     * @param  string  $currency
+     * @return RedirectResponse
      * @psalm-suppress UndefinedInterfaceMethod
+     *
+     * @throws GuzzleException
      */
-    public function handlePayment(float $amount, string $currency = 'USD')
+    public function handlePayment(float $amount, string $currency = 'USD'): RedirectResponse
     {
         $order = $this->createOrder($amount, $currency);
         $orderLinks = collect($order['links']);
@@ -97,9 +108,11 @@ class PayPalService
     /**
      * Undocumented function
      *
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @return StreamInterface|array
+     *
+     * @throws GuzzleException
      */
-    public function handleApproval()
+    public function handleApproval(): StreamInterface|array
     {
         if (session()->has('approvalId')) {
             $approvalId = session()->get('approvalId');
@@ -113,11 +126,13 @@ class PayPalService
     /**
      * Undocumented function
      *
-     * @param float $value
-     * @param string $currency
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @param  float  $value
+     * @param  string  $currency
+     * @return StreamInterface|array
+     *
+     * @throws GuzzleException
      */
-    public function createOrder(float $value, string $currency)
+    public function createOrder(float $value, string $currency): StreamInterface|array
     {
         return $this->makeRequest(
             'POST',
@@ -149,10 +164,12 @@ class PayPalService
     /**
      * Undocumented function
      *
-     * @param string $approvalId
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @param  string  $approvalId
+     * @return StreamInterface|array
+     *
+     * @throws GuzzleException
      */
-    public function capturePayment(string $approvalId)
+    public function capturePayment(string $approvalId): StreamInterface|array
     {
         return $this->makeRequest(
             'POST',

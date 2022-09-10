@@ -12,13 +12,11 @@ beforeEach(function () {
     ];
 });
 
-
 test('it can resolve paypal service', function () {
     $mercadopago = PaymentProcessors::resolveService('paypal', $this->params);
 
     $this->assertInstanceOf(\Tepuilabs\PaymentProcessors\Services\PayPalService::class, $mercadopago);
 });
-
 
 test('it can resolve paypal access token', function () {
     $paypal = PaymentProcessors::resolveService('paypal', $this->params);
@@ -27,7 +25,6 @@ test('it can resolve paypal access token', function () {
 
     $this->assertIsString($token);
 });
-
 
 test('it can handle redirect to paypal', function () {
     $paypal = PaymentProcessors::resolveService('paypal', $this->params);

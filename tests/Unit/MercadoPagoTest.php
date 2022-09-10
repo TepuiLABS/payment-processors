@@ -28,7 +28,6 @@ test('can resolve access token', function () {
     $this->assertIsString($token);
 });
 
-
 test('can return array of payment methods', function () {
     $params = [
         'base_uri' => 'https://api.mercadopago.com',
@@ -44,7 +43,6 @@ test('can return array of payment methods', function () {
     $this->assertIsArray($methods);
 });
 
-
 test('can create a preference', function () {
     $params = [
         'base_uri' => 'https://api.mercadopago.com',
@@ -58,13 +56,13 @@ test('can create a preference', function () {
     $preference = [
         'items' => [
             [
-                "title" => "Dummy Title",
-                "description" => "Dummy description",
-                "picture_url" => "http://project.dev/product-image.jpg",
-                "category_id" => "cat123",
-                "quantity" => 1,
-                "currency_id" => "UYU",
-                "unit_price" => 10,
+                'title' => 'Dummy Title',
+                'description' => 'Dummy description',
+                'picture_url' => 'http://project.dev/product-image.jpg',
+                'category_id' => 'cat123',
+                'quantity' => 1,
+                'currency_id' => 'UYU',
+                'unit_price' => 10,
             ],
         ],
         'payer' => [

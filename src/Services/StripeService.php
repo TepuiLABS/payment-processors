@@ -2,6 +2,8 @@
 
 namespace Tepuilabs\PaymentProcessors\Services;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\StreamInterface;
 use Tepuilabs\PaymentProcessors\Traits\ConsumeExternalServices;
 
 class StripeService
@@ -9,7 +11,9 @@ class StripeService
     use ConsumeExternalServices;
 
     protected string $baseUri;
+
     protected string $key;
+
     protected string $secret;
 
     final public function __construct(array $apiKeys)
@@ -47,13 +51,13 @@ class StripeService
     /**
      * Undocumented function
      *
-     * @param array $paymentData
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @param  array  $paymentData
+     * @return StreamInterface|array
      * @psalm-suppress UndefinedInterfaceMethod
      */
-    public function handlePayment(array $paymentData)
+    public function handlePayment(array $paymentData): StreamInterface|array
     {
-        $currency = isset($paymentData['currency']) ? $paymentData['currency'] : 'USD';
+        $currency = $paymentData['currency'] ?? 'USD';
         $amount = $paymentData['amount'];
         $paymentMethod = $paymentData['paymentMethod'];
 
@@ -63,9 +67,9 @@ class StripeService
     /**
      * Undocumented function
      *
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @return StreamInterface|array
      */
-    public function handleApproval()
+    public function handleApproval(): StreamInterface|array
     {
         return [];
     }
@@ -73,19 +77,21 @@ class StripeService
     /**
      * Undocumented function
      *
-     * @param float $value
-     * @param string $currency
-     * @param string $paymentMethod
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @param  float  $value
+     * @param  string  $currency
+     * @param  string  $paymentMethod
+     * @return StreamInterface|array
+     *
+     * @throws GuzzleException
      */
-    public function createIntent(float $value, string $currency, string $paymentMethod)
+    public function createIntent(float $value, string $currency, string $paymentMethod): StreamInterface|array
     {
         return $this->makeRequest(
             'POST',
             '/v1/payment_intents',
             [],
             [
-                'amount' => round($value * $this->resolveFactor($currency)),
+                'amount' => $value,
                 'currency' => strtolower($currency),
                 'payment_method' => $paymentMethod,
                 'confirmation_method' => 'manual',
@@ -99,31 +105,16 @@ class StripeService
     /**
      * Undocumented function
      *
-     * @param string $paymentIntentId
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @param  string  $paymentIntentId
+     * @return StreamInterface|array
+     *
+     * @throws GuzzleException
      */
-    public function confirmPayment(string $paymentIntentId)
+    public function confirmPayment(string $paymentIntentId): StreamInterface|array
     {
         return $this->makeRequest(
             'POST',
             "/v1/payment_intents/{$paymentIntentId}/confirm",
         );
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param string $currency
-     * @return int
-     */
-    private function resolveFactor(string $currency)
-    {
-        $zeroDecimalCurrencies = ['JPY'];
-
-        if (in_array(strtoupper($currency), $zeroDecimalCurrencies)) {
-            return 1;
-        }
-
-        return 100;
     }
 }
