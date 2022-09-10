@@ -1,17 +1,21 @@
 <?php
 
+use Tepuilabs\PaymentProcessors\Services\MercadoPagoService;
+use Tepuilabs\PaymentProcessors\Services\PayPalService;
+use Tepuilabs\PaymentProcessors\Services\StripeService;
+
 return [
 
     'mercadopago' => [
-        'class' => \Tepuilabs\PaymentProcessors\Services\MercadoPagoService::class,
+        'class' => MercadoPagoService::class,
     ],
 
     'paypal' => [
-        'class' => \Tepuilabs\PaymentProcessors\Services\PayPalService::class,
+        'class' => PayPalService::class,
     ],
 
     'stripe' => [
-        'class' => \Tepuilabs\PaymentProcessors\Services\StripeService::class,
+        'class' => StripeService::class,
     ],
 
 ];

@@ -2,6 +2,8 @@
 
 namespace Tepuilabs\PaymentProcessors\Services;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\StreamInterface;
 use Tepuilabs\PaymentProcessors\Traits\ConsumeExternalServices;
 
 class MercadoPagoService
@@ -9,9 +11,13 @@ class MercadoPagoService
     use ConsumeExternalServices;
 
     protected string $baseUri;
+
     protected string $key;
+
     protected string $secret;
+
     protected string $baseCurrency;
+
     protected string $integratorId;
 
     final public function __construct(array $apiKeys)
@@ -52,14 +58,22 @@ class MercadoPagoService
     /**
      * Undocumented function
      *
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @return StreamInterface|array
+     *
+     * @throws GuzzleException
      */
-    public function getPaymentMethods()
+    public function getPaymentMethods(): StreamInterface|array
     {
         return $this->makeRequest('GET', '/v1/payment_methods');
     }
 
-    public function createPreference(array $params)
+    /**
+     * @param  array  $params
+     * @return StreamInterface|array
+     *
+     * @throws GuzzleException
+     */
+    public function createPreference(array $params): StreamInterface|array
     {
         return $this->makeRequest(
             'POST',
@@ -74,13 +88,13 @@ class MercadoPagoService
     /**
      * handlePayment
      *
-     * @param string $cardNetwork
-     * @param string $cardToken
-     * @param int $amount
-     * @param string $userEmail
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @param  string  $cardNetwork
+     * @param  string  $cardToken
+     * @param  int  $amount
+     * @param  string  $userEmail
+     * @return StreamInterface|array
      */
-    public function handlePayment(string $cardNetwork, string $cardToken, int $amount, string $userEmail)
+    public function handlePayment(string $cardNetwork, string $cardToken, int $amount, string $userEmail): StreamInterface|array
     {
         return $this->createPayment(
             $amount,
@@ -103,14 +117,16 @@ class MercadoPagoService
     /**
      * createPayment
      *
-     * @param int $amount
-     * @param string $cardNetwork
-     * @param string $cardToken
-     * @param string $email
-     * @param int $installments
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @param  int  $amount
+     * @param  string  $cardNetwork
+     * @param  string  $cardToken
+     * @param  string  $email
+     * @param  int  $installments
+     * @return StreamInterface|array
+     *
+     * @throws GuzzleException
      */
-    private function createPayment(int $amount, string $cardNetwork, string $cardToken, string $email, int $installments = 1)
+    private function createPayment(int $amount, string $cardNetwork, string $cardToken, string $email, int $installments = 1): StreamInterface|array
     {
         return $this->makeRequest(
             'POST',
@@ -120,9 +136,9 @@ class MercadoPagoService
                 'token' => $cardToken,
                 'installments' => $installments,
                 'transaction_amount' => $amount,
-                'description' => config('app.name') . ' MercadoPago',
+                'description' => config('app.name').' MercadoPago',
                 'payment_method_id' => $cardNetwork,
-                'statement_descriptor' => config('app.name') . ' MercadoPago',
+                'statement_descriptor' => config('app.name').' MercadoPago',
                 'payer' => [
                     'email' => $email,
                 ],

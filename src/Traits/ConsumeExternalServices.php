@@ -3,22 +3,25 @@
 namespace Tepuilabs\PaymentProcessors\Traits;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\StreamInterface;
 
 trait ConsumeExternalServices
 {
     /**
      * makeRequest
      *
-     * @param string $method
-     * @param string $requestUrl
-     * @param array $queryParams
-     * @param array $formParams
-     * @param array $headers
-     * @param bool $isJsonRequest
+     * @param  string  $method
+     * @param  string  $requestUrl
+     * @param  array  $queryParams
+     * @param  array  $formParams
+     * @param  array  $headers
+     * @param  bool  $isJsonRequest
+     * @return StreamInterface|array
      *
-     * @return \Psr\Http\Message\StreamInterface|array
+     * @throws GuzzleException
      */
-    public function makeRequest(string $method, string $requestUrl, array $queryParams = [], array $formParams = [], array $headers = [], bool $isJsonRequest = false)
+    public function makeRequest(string $method, string $requestUrl, array $queryParams = [], array $formParams = [], array $headers = [], bool $isJsonRequest = false): StreamInterface|array
     {
         $client = new Client([
             'base_uri' => $this->baseUri,

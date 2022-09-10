@@ -31,7 +31,7 @@ composer require tepuilabs/payment-processors
 de forma opcional puedes publicar el archivo de configuración:
 
 ```bash
-php artisan vendor:publish --provider="Tepuilabs\PaymentProcessors\PaymentProcessorsServiceProvider" --tag="config"
+php artisan vendor:publish --tag="payment-processors-config"
 ```
 
 el contenido del archivo de configuración es el siguiente:
@@ -231,7 +231,7 @@ $stripe = PaymentProcessors::resolveService('stripe', $params);
 // Despues de obtener el payment method id pasamos a generar el pago de la siguiente forma:
 
 $paymentData = [
-    'amount' => 501.52,
+    'amount' => 500, // integer
     'paymentMethod' => $paymentMethodId, // pm_1IOYCAJcoyM5FfOy0cVbjyuH
 ];
 

@@ -9,13 +9,11 @@ beforeEach(function () {
     ];
 });
 
-
 test('it can resolve stripe service', function () {
     $stripe = PaymentProcessors::resolveService('stripe', $this->params);
 
     $this->assertInstanceOf(\Tepuilabs\PaymentProcessors\Services\StripeService::class, $stripe);
 });
-
 
 test('it can get stripe balance', function () {
     $stripe = PaymentProcessors::resolveService('stripe', $this->params);
@@ -50,7 +48,7 @@ test('it can handle a stripe payment', function ($paymentMethodId) {
     $stripe = PaymentProcessors::resolveService('stripe', $this->params);
 
     $paymentData = [
-        'amount' => 501.52,
+        'amount' => 500,
         'paymentMethod' => $paymentMethodId,
     ];
 
