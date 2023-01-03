@@ -14,6 +14,7 @@ class PaymentProcessors
      * @throws \Exception
      *
      * @todo hacer que funcione con psalm #YOLO
+     *
      * @psalm-suppress MissingReturnType
      * @psalm-suppress PossiblyInvalidCast
      * @psalm-suppress PossiblyInvalidArgument

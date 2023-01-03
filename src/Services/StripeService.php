@@ -53,6 +53,7 @@ class StripeService
      *
      * @param  array  $paymentData
      * @return StreamInterface|array
+     *
      * @psalm-suppress UndefinedInterfaceMethod
      */
     public function handlePayment(array $paymentData): StreamInterface|array

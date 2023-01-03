@@ -89,6 +89,7 @@ class PayPalService
      * @param  float  $amount
      * @param  string  $currency
      * @return RedirectResponse
+     *
      * @psalm-suppress UndefinedInterfaceMethod
      *
      * @throws GuzzleException
