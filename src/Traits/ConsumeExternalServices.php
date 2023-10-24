@@ -11,13 +11,6 @@ trait ConsumeExternalServices
     /**
      * makeRequest
      *
-     * @param  string  $method
-     * @param  string  $requestUrl
-     * @param  array  $queryParams
-     * @param  array  $formParams
-     * @param  array  $headers
-     * @param  bool  $isJsonRequest
-     * @return StreamInterface|array
      *
      * @throws GuzzleException
      */

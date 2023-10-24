@@ -58,7 +58,6 @@ class MercadoPagoService
     /**
      * Undocumented function
      *
-     * @return StreamInterface|array
      *
      * @throws GuzzleException
      */
@@ -68,9 +67,6 @@ class MercadoPagoService
     }
 
     /**
-     * @param  array  $params
-     * @return StreamInterface|array
-     *
      * @throws GuzzleException
      */
     public function createPreference(array $params): StreamInterface|array
@@ -87,12 +83,6 @@ class MercadoPagoService
 
     /**
      * handlePayment
-     *
-     * @param  string  $cardNetwork
-     * @param  string  $cardToken
-     * @param  int  $amount
-     * @param  string  $userEmail
-     * @return StreamInterface|array
      */
     public function handlePayment(string $cardNetwork, string $cardToken, int $amount, string $userEmail): StreamInterface|array
     {
@@ -107,8 +97,6 @@ class MercadoPagoService
     /**
      * en mercado pago no se maneja aprobaciones
      * por defecto los aprueba
-     *
-     * @return void
      */
     public function handleApproval(): void
     {
@@ -117,12 +105,6 @@ class MercadoPagoService
     /**
      * createPayment
      *
-     * @param  int  $amount
-     * @param  string  $cardNetwork
-     * @param  string  $cardToken
-     * @param  string  $email
-     * @param  int  $installments
-     * @return StreamInterface|array
      *
      * @throws GuzzleException
      */

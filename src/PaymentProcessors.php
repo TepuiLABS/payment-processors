@@ -7,9 +7,6 @@ class PaymentProcessors
     /**
      * Undocumented function
      *
-     * @param  string  $name
-     * @param  array  $params
-     * @return mixed
      *
      * @throws \Exception
      *

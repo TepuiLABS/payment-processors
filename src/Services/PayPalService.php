@@ -50,7 +50,6 @@ class PayPalService
     /**
      * resolveAccessToken
      *
-     * @return string
      *
      * @throws GuzzleException
      */
@@ -86,9 +85,6 @@ class PayPalService
     /**
      * Undocumented function
      *
-     * @param  float  $amount
-     * @param  string  $currency
-     * @return RedirectResponse
      *
      * @psalm-suppress UndefinedInterfaceMethod
      *
@@ -109,7 +105,6 @@ class PayPalService
     /**
      * Undocumented function
      *
-     * @return StreamInterface|array
      *
      * @throws GuzzleException
      */
@@ -127,9 +122,6 @@ class PayPalService
     /**
      * Undocumented function
      *
-     * @param  float  $value
-     * @param  string  $currency
-     * @return StreamInterface|array
      *
      * @throws GuzzleException
      */
@@ -165,8 +157,6 @@ class PayPalService
     /**
      * Undocumented function
      *
-     * @param  string  $approvalId
-     * @return StreamInterface|array
      *
      * @throws GuzzleException
      */

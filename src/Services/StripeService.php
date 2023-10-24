@@ -40,8 +40,6 @@ class StripeService
 
     /**
      * resolveAccessToken
-     *
-     * @return string
      */
     public function resolveAccessToken(): string
     {
@@ -51,8 +49,6 @@ class StripeService
     /**
      * Undocumented function
      *
-     * @param  array  $paymentData
-     * @return StreamInterface|array
      *
      * @psalm-suppress UndefinedInterfaceMethod
      */
@@ -67,8 +63,6 @@ class StripeService
 
     /**
      * Undocumented function
-     *
-     * @return StreamInterface|array
      */
     public function handleApproval(): StreamInterface|array
     {
@@ -78,10 +72,6 @@ class StripeService
     /**
      * Undocumented function
      *
-     * @param  float  $value
-     * @param  string  $currency
-     * @param  string  $paymentMethod
-     * @return StreamInterface|array
      *
      * @throws GuzzleException
      */
@@ -106,8 +96,6 @@ class StripeService
     /**
      * Undocumented function
      *
-     * @param  string  $paymentIntentId
-     * @return StreamInterface|array
      *
      * @throws GuzzleException
      */
